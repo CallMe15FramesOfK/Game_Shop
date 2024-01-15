@@ -22,4 +22,6 @@ public class ApplicationDBContext : IdentityDbContext
     }
 
 public DbSet<Game_Shop.Entities.GameShopEntity> GameShopEntity { get; set; } = default!;
+
+public DbSet<Game_Shop.Entities.User_List> User_List { get; set; } = default!;
 }

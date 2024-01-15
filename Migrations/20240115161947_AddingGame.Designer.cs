@@ -4,6 +4,7 @@ using Game_Shop.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Game_Shop.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240115161947_AddingGame")]
+    partial class AddingGame
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +43,12 @@ namespace Game_Shop.Migrations
                     b.Property<string>("Platform")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("User_ListId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("User_ListId");
 
                     b.ToTable("GameShopEntity");
                 });
@@ -52,16 +60,6 @@ namespace Game_Shop.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("GameGenre")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GameName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GamePlatform")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("GameShopEntityId")
                         .HasColumnType("int");
@@ -273,6 +271,13 @@ namespace Game_Shop.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Game_Shop.Entities.GameShopEntity", b =>
+                {
+                    b.HasOne("Game_Shop.Entities.User_List", null)
+                        .WithMany("Game_List")
+                        .HasForeignKey("User_ListId");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -322,6 +327,11 @@ namespace Game_Shop.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Game_Shop.Entities.User_List", b =>
+                {
+                    b.Navigation("Game_List");
                 });
 #pragma warning restore 612, 618
         }

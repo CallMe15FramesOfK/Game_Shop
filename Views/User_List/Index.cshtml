@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Game_Shop.Entities.User_List>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Our Game List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GameShopEntityId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GameName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GamePlatform)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GameGenre)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
